@@ -160,4 +160,16 @@ Module.new do
                      Gtk::openurl(u[:url]) if u[:face][0,4] == "http" }},
                  :visible => true,
                  :role => ROLE_MESSAGE )
+
+  define_command(:select_top,
+                 :name => '一番上のつぶやきを選択',
+                 :condition => lambda{ |tl| true },
+                 :exec => lambda{ |tl|
+                   path, column = tl.cursor
+                   bef = path
+                   while path.prev!
+                     bef = path end
+                   tl.set_cursor(bef, column, false) if bef and column },
+                 :visible => false,
+                 :role => ROLE_TIMELINE )
 end
